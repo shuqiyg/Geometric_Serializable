@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 /********************************************** 
 Workshop # 4
 Course: JAC433
@@ -10,7 +12,7 @@ Signature
 Date:2022-02-23
 **********************************************/ 
 
-public abstract class GeometricObject {
+public abstract class GeometricObject implements Serializable{
 	private String color;
 	private Boolean filled;
 	//constants 

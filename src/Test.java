@@ -10,6 +10,7 @@ Signature
 Date:2022-02-23
 **********************************************/ 
 
+import java.util.ArrayList;
 import java.util.Scanner;
 // test program
 public class Test {
@@ -22,11 +23,12 @@ public class Test {
 		Boolean exit = false; 
 		Triangle triangleSample = null;
 		Circle circleSample = null;
+		Stream goStream = new Stream();
 		System.out.println("Welcome to GO testing program!");
 		do {
 			
 			System.out.println("Please choose one of the following option ===> ");
-			System.out.println("1. Create an Object\n2. Upsize an Object\n3. Downsize an Object\n4. Exit Program\n");
+			System.out.println("1. Create an Object\n2. Upsize an Object\n3. Downsize an Object\n4. Save\n5. Load\n6. Exit Program\n");
 			try {
 				mainOption = input.next();
 				System.out.println();
@@ -71,7 +73,7 @@ public class Test {
 							System.out.println("Fail to creat a Triangle Object, try again...\n");
 							continue;
 						}
-						System.out.println("A new Triangle has been created successfully, here is the information: " + triangleSample + "\n");
+						System.out.println("\nA new Triangle has been created successfully, here is the information: " + triangleSample + "\n");
 						exit1 = true;
 						break;
 					case "b":
@@ -99,7 +101,7 @@ public class Test {
 							System.out.println("Fail to creat a Triangle Object, try again...\n");
 							continue;
 						}
-						System.out.println("A new Circle has been created successfully, here is the information: " + circleSample + "\n");
+						System.out.println("\nA new Circle has been created successfully, here is the information: " + circleSample + "\n");
 						exit1 = true;
 						break;
 					default:
@@ -185,7 +187,7 @@ public class Test {
 					switch(shapeInt1) {
 					case 1:
 						if(triangleSample == null) {
-							System.out.println("Please create a Geometric Object before upsizing\n");
+							System.out.println("Please create a Geometric Object before downsizing\n");
 							continue;
 						}
 						System.out.println("What's the percentage amount you want to increase by(%): ");
@@ -203,7 +205,7 @@ public class Test {
 						break;
 					case 2:
 						if(circleSample == null) {
-							System.out.println("Please create a Geometric Object before upsizing\n");
+							System.out.println("Please create a Geometric Object before downsizing\n");
 							continue;
 						}
 						System.out.println("What's the percentage amount you want to decrease by(%): ");
@@ -228,12 +230,95 @@ public class Test {
 				}while(!exit3);
 				break;
 			case 4:
+				Boolean exit4 = false;
+				int saveOption;
+				do {
+					System.out.print("Which object you want to save? (1.Triangle 2.Circle 3.Exit)  ");
+					saveOption = input.nextInt();
+					System.out.println();
+					switch(saveOption) {
+					case 1:
+						if(triangleSample != null) {
+							goStream.write(triangleSample);
+							System.out.println("A Triangle Object has been saved.\n");
+							exit4 = true;
+						}else {
+							System.out.println("No Triangle Object to save....\n");
+						}
+						break;
+					case 2:
+						if(circleSample != null) {
+							goStream.write(circleSample);
+							System.out.println("A Circle Object has been saved.\n");
+							exit4 = true;
+						}else {
+							System.out.println("No Circle Object to save....\n");
+						}
+						break;
+					case 3:
+						exit4 = true;
+						break;
+					default:
+						System.out.println("Invalid save option input, try again...\n");
+					}
+				}while(!exit4);
+				break;
+			case 5:
+				Boolean exit5 = false;
+				//do {
+					goStream.read();
+					ArrayList<GeometricObject> GoArr = goStream.getObjectsArr();
+					//ArrayList<GeometricObject> GoArr =new ArrayList<GeometricObject>();// goStream.getTriangleArr();
+					//for(int i = 0; i < goStream.getCircleArr().size(); i++) {
+						//GoArr.add(goStream.getCircleArr().get(i));
+					//}
+					//for(int i = 0; i < goStream.getTriangleArr().size(); i++) {
+						//GoArr.add(goStream.getTriangleArr().get(i));
+				//	}
+					//GoArr.addAll(GoArr.size(), goStream.getCircleArr());
+					//System.out.println(goStream.getTriangleArr().size() + "---" + goStream.getCircleArr().size());
+					if(GoArr.size() == 0) {
+						System.out.println("File is empty, no object to load...\n");
+					}else {
+						for(int i = 0; i < GoArr.size(); i++) {
+							System.out.println("Object " + (i+1) +" ------> " + GoArr.get(i));	
+						}
+						System.out.println();
+						do {
+							System.out.print("Please choose one of these object to load (Type in number) ");
+							int loadOption = input.nextInt() - 1;
+							if(loadOption < 0 || loadOption > GoArr.size() -1 ) {
+								System.out.println("Invalid option, please try again...\n");
+							}else {
+								
+								//if(GoArr.get(loadOption).getClass());
+								//System.out.println(GoArr.get(loadOption).getClass().equals(triangleSample));
+								if(GoArr.get(loadOption).getClass() == Triangle.class) {
+									Triangle temp = (Triangle)GoArr.get(loadOption);
+									triangleSample = temp;
+									//goStream.getTriangleArr().remove(loadOption);
+									
+								}else {
+									Circle temp = (Circle)GoArr.get(loadOption);
+									circleSample = temp;
+									//goStream.getCircleArr().remove(loadOption + goStream.getTriangleArr().size());
+									//goStream.getCircleArr().remove(GoArr.size() - loadOption -1);
+								}
+								goStream.getObjectsArr().remove(loadOption);
+								System.out.println();
+								exit5 = true;
+							}
+						}while(!exit5);
+					}
+				break;
+			case 6:
 				System.out.println("Goodbye!");
 				exit = true;
 				input.close();
+				goStream.closeFile();
 				break;
 			default:
-				System.out.println("Please enter a number between 1 to 4.....\n");
+				System.out.println("Please enter a number between 1 to 6.....\n");
 			}
 		}while(!exit);
 		

@@ -10,9 +10,11 @@ Signature
 Date:2022-02-23
 **********************************************/ 
 
+@SuppressWarnings("serial")
 public class Triangle extends GeometricObject implements Resizable{
 	double side1, side2, side3;
 	
+	public Triangle() {};
 	public Triangle(double side1, double side2, double side3, String color, Boolean filled) throws InvalidGOSizeException  {
 		super(color, filled);
 		if(side1 < defSize || side1 >maxSize || side2 >maxSize || side2 < defSize || side3 < defSize || side3 > maxSize || side1 + side2 <= side3 || side2 + side3 <= side1 || side2 + side3 <= side1) {
@@ -85,6 +87,6 @@ public class Triangle extends GeometricObject implements Resizable{
 		
 	}
 	public String toString() {
-		return "\nArea: " + getArea() + "\nPerimeter: " + getPerimeter() + "\nColor: " + getColor() + "\nFilled: " + (getFilled()? "Yes": "No") + "\n";
+		return "\nSide1: " + this.side1 + "\nSide2: " + this.side2 +"\nSide3: " + this.side3 + "\nArea: " + getArea() + "\nPerimeter: " + getPerimeter() + "\nColor: " + getColor() + "\nFilled: " + (getFilled()? "Yes": "No") + "\n";
 	}
 }

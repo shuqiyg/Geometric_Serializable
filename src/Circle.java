@@ -13,6 +13,7 @@ public class Circle extends GeometricObject implements Resizable {
 	double radius = 1.0;
 	final double pi = 3.1416;
 	
+	public Circle() {};
 	public Circle(double radius, String color, Boolean filled) throws InvalidGOSizeException {
 		super(color, filled);
 		if(radius < defSize || radius > maxSize) {
@@ -62,6 +63,6 @@ public class Circle extends GeometricObject implements Resizable {
 		
 	}
 	public String toString() {
-		return "\nArea: " + this.getArea() + "\nPerimeter: " + this.getPerimeter() + "\nColor: " + this.getColor() + "\nFilled: " + (this.getFilled()? "Yes": "No") + "\n";
+		return "\nRadius: " + this.radius + "\nArea: " + this.getArea() + "\nPerimeter: " + this.getPerimeter() + "\nColor: " + this.getColor() + "\nFilled: " + (this.getFilled()? "Yes": "No") + "\n";
 	}
 }
